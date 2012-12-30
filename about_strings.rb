@@ -31,8 +31,8 @@ class AboutStrings < EdgeCase::Koan
     a = %(flexible quotes can handle both ' and " characters)
     b = %!flexible quotes can handle both ' and " characters!
     c = %{flexible quotes can handle both ' and " characters}
-    assert_equal __, a == b
-    assert_equal __, a == c
+    assert_equal true, a == b
+    assert_equal true, a == c
   end
 
   def test_flexible_quotes_can_handle_multiple_lines
@@ -40,8 +40,8 @@ class AboutStrings < EdgeCase::Koan
 It was the best of times,
 It was the worst of times.
 }
-    assert_equal __, long_string.length
-    assert_equal __, long_string.lines.count
+    assert_equal 54, long_string.length
+    assert_equal 3, long_string.lines.count
   end
 
   def test_here_documents_can_also_handle_multiple_lines
@@ -49,28 +49,28 @@ It was the worst of times.
 It was the best of times,
 It was the worst of times.
 EOS
-    assert_equal __, long_string.length
-    assert_equal __, long_string.lines.count
+    assert_equal 53, long_string.length
+    assert_equal 2, long_string.lines.count
   end
 
   def test_plus_will_concatenate_two_strings
     string = "Hello, " + "World"
-    assert_equal __, string
+    assert_equal "Hello, World", string
   end
 
   def test_plus_concatenation_will_leave_the_original_strings_unmodified
     hi = "Hello, "
     there = "World"
     string = hi + there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, ", hi
+    assert_equal "World", there
   end
 
   def test_plus_equals_will_concatenate_to_the_end_of_a_string
     hi = "Hello, "
     there = "World"
     hi += there
-    assert_equal __, hi
+    assert_equal "Hello, World", hi
   end
 
   def test_plus_equals_also_will_leave_the_original_string_unmodified
@@ -78,15 +78,15 @@ EOS
     hi = original_string
     there = "World"
     hi += there
-    assert_equal __, original_string
+    assert_equal "Hello, ", original_string
   end
 
   def test_the_shovel_operator_will_also_append_content_to_a_string
     hi = "Hello, "
     there = "World"
     hi << there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, World", hi
+    assert_equal "World", there
   end
 
   def test_the_shovel_operator_modifies_the_original_string
@@ -94,12 +94,14 @@ EOS
     hi = original_string
     there = "World"
     hi << there
-    assert_equal __, original_string
+    assert_equal "Hello, World", original_string
 
     # THINK ABOUT IT:
     #
     # Ruby programmers tend to favor the shovel operator (<<) over the
     # plus equals operator (+=) when building up strings.  Why?
+    # They like to modify the original strings. Of course it's usage varies based on
+    # on the project.
   end
 
   def test_double_quoted_string_interpret_escape_characters
