@@ -18,7 +18,7 @@ def triangle(a, b, c)
     return :equilateral
   elsif (a == b or a == c or b == c)
     return :isosceles
-  else
+  elsif (a != b and a != c)
     return :scalene
   end
 end
